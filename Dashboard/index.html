@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard de Calidad del Aire e Industrias</title>
+
+    <!-- Stylesheets -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Libraries -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="dashboard-header">
+        <h1>Dashboard de Calidad del Aire e Industrias</h1>
+        <p>
+          Análisis de contaminación atmosférica y su relación con industrias
+        </p>
+      </header>
+
+      <!-- High-Level Section -->
+      <section class="high-level-section">
+        <h2>Panel de Análisis de Calidad del Aire</h2>
+
+        <!-- Row 1: Integrated Map (Full Width) -->
+        <div class="dashboard-row dashboard-row-1">
+          <div class="visualization-container">
+            <h3>Mapa Integrado: Estaciones e Industrias</h3>
+            <div id="vis-integrated-map" class="map-container large"></div>
+          </div>
+        </div>
+
+        <!-- Row 2: Industry Filters + Heatmap -->
+        <div class="dashboard-row dashboard-row-2">
+          <!-- Filter Block for High-Level Visualizations -->
+          <div class="filter-block compact" id="high-level-filters">
+            <h3>Filtros de Industrias</h3>
+            <div class="filter-grid vertical">
+              <div class="filter-item">
+                <label for="filter-estado">Estado</label>
+                <select id="filter-estado" class="filter-select">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="filter-combustible">Tipo de Combustible</label>
+                <select id="filter-combustible" class="filter-select">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="filter-fuente">Tipo de Fuente de Emisión</label>
+                <select id="filter-fuente" class="filter-select">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="filter-cuenca">Cuenca</label>
+                <select id="filter-cuenca" class="filter-select">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="filter-contaminante-mapa">Contaminante</label>
+                <select id="filter-contaminante-mapa" class="filter-select">
+                  <option value="PM10">PM10</option>
+                  <option value="PM2">PM2.5</option>
+                  <option value="O3">O3</option>
+                  <option value="So2">SO2</option>
+                </select>
+              </div>
+            </div>
+            <button id="apply-high-level-filters" class="btn-primary">
+              Aplicar Filtros
+            </button>
+          </div>
+
+          <!-- Visualization 2: Heatmap -->
+          <div class="visualization-container">
+            <h3>Concentraciones Promedio por Estación</h3>
+            <div id="vis-heatmap" class="chart-container large"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Low-Level Section -->
+      <section class="low-level-section">
+        <h2>Análisis Detallado por Estación</h2>
+
+        <!-- Row 3: Station Filters (Full Width) -->
+        <div class="dashboard-row dashboard-row-3">
+          <div class="filter-block horizontal" id="low-level-filters">
+            <h3>Filtros de Estación</h3>
+            <div class="filter-grid horizontal">
+              <div class="filter-item">
+                <label for="filter-station">Estación</label>
+                <select id="filter-station" class="filter-select">
+                  <option value="2">Estación 2</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="filter-pollutants">Contaminantes</label>
+                <div
+                  class="checkbox-group"
+                  id="filter-pollutants"
+                  style="flex-direction: row; gap: 15px"
+                >
+                  <label
+                    ><input type="checkbox" value="PM10" checked /> PM10</label
+                  >
+                  <label
+                    ><input type="checkbox" value="PM2" checked /> PM2.5</label
+                  >
+                  <label><input type="checkbox" value="O3" checked /> O3</label>
+                  <label
+                    ><input type="checkbox" value="So2" checked /> SO2</label
+                  >
+                </div>
+              </div>
+              <div class="filter-item">
+                <label for="filter-period">Período</label>
+                <select id="filter-period" class="filter-select">
+                  <option value="2024-S1">Primer Semestre 2024</option>
+                  <option value="2025-S1">Primer Semestre 2025</option>
+                </select>
+              </div>
+              <div
+                class="filter-item"
+                style="display: flex; align-items: flex-end"
+              >
+                <button
+                  id="apply-low-level-filters"
+                  class="btn-primary"
+                  style="width: 100%"
+                >
+                  Aplicar Filtros
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: Temporal Evolution + Hourly Patterns (Side by Side) -->
+        <div class="dashboard-row dashboard-row-4">
+          <!-- Visualization 3: Temporal Evolution -->
+          <div class="visualization-container">
+            <h3>Evolución Temporal</h3>
+            <div id="vis-temporal" class="chart-container medium"></div>
+          </div>
+
+          <!-- Visualization 4: Hourly Patterns -->
+          <div class="visualization-container">
+            <h3>Patrones Horarios</h3>
+            <div id="vis-hourly" class="chart-container medium"></div>
+          </div>
+        </div>
+
+        <!-- Row 5: Station Map (Full Width) -->
+        <div class="dashboard-row dashboard-row-5">
+          <div class="visualization-container">
+            <h3>Mapa de Estación e Industrias Cercanas</h3>
+            <div id="vis-station-map" class="map-container medium"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="dashboard-footer">
+        <p>Dashboard de Análisis Visual - 2024-2025</p>
+      </footer>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Cargando datos...</p>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

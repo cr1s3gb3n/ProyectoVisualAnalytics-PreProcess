@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Dashboard</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .container {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 600px;
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      p {
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+      }
+      .btn {
+        display: inline-block;
+        background: #3498db;
+        color: white;
+        padding: 15px 40px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+      .btn:hover {
+        background: #2980b9;
+      }
+      .warning {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+        color: #856404;
+      }
+      .info {
+        background: #d1ecf1;
+        border: 1px solid #17a2b8;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+        color: #0c5460;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🌍 Dashboard de Calidad del Aire</h1>
+      <p>
+        Bienvenido al Dashboard de Análisis de Calidad del Aire e Industrias.
+        Este dashboard interactivo te permite explorar datos de contaminación
+        atmosférica y su relación con industrias.
+      </p>
+
+      <a href="index.html" class="btn">Iniciar Dashboard</a>
+
+      <div class="warning">
+        <strong>⚠️ Importante:</strong> Para evitar problemas de CORS, ejecuta
+        este dashboard desde un servidor local. Ver README.md para
+        instrucciones.
+      </div>
+
+      <div class="info">
+        <strong>💡 Consejo rápido:</strong><br />
+        Ejecuta en PowerShell:<br />
+        <code>python -m http.server 8000</code><br />
+        Luego abre: <a href="http://localhost:8000">http://localhost:8000</a>
+      </div>
+    </div>
+  </body>
+</html>
