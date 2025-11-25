@@ -26,6 +26,7 @@ Este dashboard interactivo visualiza datos de calidad del aire y su relación co
    ```bash
    php -S localhost:8000
    ```
+3. Abrir en el navegador `http://localhost:8000/`
 
 ## Estructura del Proyecto
 
